@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Лабораторна робота №4</title>
+<style>
+    :root {
+        --bg: #fafafa;
+        --panel: #ffffff;
+        --border: #e2e2e2;
+        --text: #222222;
+        --text-muted: #767676;
+        --accent: #3462cf;
+        --accent-bg: #eef2fc;
+        --green: #2e9e63;
+        --red: #d1495b;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: -apple-system, "Segoe UI", Arial, sans-serif;
+        font-size: 15px;
+        line-height: 1.6;
+    }
+
+    .page {
+        max-width: 680px;
+        margin: 0 auto;
+        padding: 40px 20px 64px;
+    }
+
+    header {
+        margin-bottom: 32px;
+    }
+
+    header h1 {
+        margin: 0 0 6px;
+        font-size: 22px;
+    }
+
+    header p {
+        margin: 0;
+        color: var(--text-muted);
+        font-size: 14px;
+    }
+
+    .task {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 16px 18px;
+        margin-bottom: 16px;
+    }
+
+    .task h3 {
+        margin: 0 0 6px;
+        font-size: 15.5px;
+        font-weight: 600;
+    }
+
+    .task p.desc {
+        margin: 0 0 14px;
+        color: var(--text-muted);
+        font-size: 13.5px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 10px;
+        font-size: 14px;
+    }
+
+    input[type="text"] {
+        display: block;
+        margin-top: 4px;
+        padding: 6px 10px;
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        font-size: 14px;
+        width: 160px;
+    }
+
+    button {
+        appearance: none;
+        border: 1px solid var(--accent);
+        background: var(--accent-bg);
+        color: var(--accent);
+        font-size: 13.5px;
+        font-weight: 500;
+        padding: 6px 14px;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-right: 6px;
+        margin-bottom: 8px;
+    }
+
+    button:hover {
+        background: var(--accent);
+        color: #fff;
+    }
+
+    .score {
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    .question {
+        font-size: 17px;
+        font-weight: 600;
+        margin: 10px 0;
+    }
+
+    .result {
+        margin-top: 10px;
+        font-weight: 600;
+    }
+
+    .result.ok { color: var(--green); }
+    .result.fail { color: var(--red); }
+
+    #options3 label {
+        display: block;
+        margin: 4px 0;
+        font-size: 15px;
+    }
+
+    #rotator {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    #rotator .counter {
+        margin: 0 0 10px;
+        font-weight: 600;
+    }
+
+    #rotator .row {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+
+    #rotator img {
+        width: 320px;
+        height: 220px;
+        object-fit: cover;
+        border-radius: 6px;
+        border: 1px solid var(--border);
+    }
+
+    #rotator a {
+        color: var(--accent);
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    #rotator .title {
+        margin: 12px 0 0;
+        font-weight: 600;
+    }
+
+    #rotator .description {
+        margin: 2px 0 0;
+        color: var(--text-muted);
+        font-size: 13.5px;
+    }
+
+    #captchaDisplay {
+        margin: 12px 0;
+    }
+
+    #captchaDisplay span {
+        display: inline-block;
+        width: 34px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        margin-right: 4px;
+        border-radius: 4px;
+        background: #fdeaea;
+        color: var(--red);
+        font-family: monospace;
+        font-size: 24px;
+        font-weight: 700;
+    }
+
+    @media (max-width: 500px) {
+        #rotator img { width: 100%; max-width: 320px; }
+    }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+    <header>
+        <h1>Лабораторна робота №4</h1>
+        <p>Хшановська Уляна №18</p>
+    </header>
+
+    <section class="task">
+        <h3>1. Конвертер Фаренгейт ↔ Цельсій</h3>
+        <p class="desc">Кнопок немає — результат з'являється одразу, щойно змінити число в одному з полів.</p>
+        <label>Температура за Фаренгейтом
+            <input type="text" id="fahrenheit" oninput="onFahrenheitChange()">
+        </label>
+        <label>Температура за Цельсієм
+            <input type="text" id="celsius" oninput="onCelsiusChange()">
+        </label>
+    </section>
+
+    <section class="task">
+        <h3>2. Таблиця множення (текстове поле)</h3>
+        <p class="desc">Завдання генерується випадково. Відповідь вводиться у поле й перевіряється кнопкою.</p>
+        <p class="score" id="score2">Загальний рахунок 0% (0 правильних відповідей з 0)</p>
+        <button onclick="nextTask2()">наступне завдання</button>
+        <p class="question" id="question2"></p>
+        <input type="text" id="answer2">
+        <button onclick="checkAnswer2()">перевірити</button>
+        <p class="result" id="result2"></p>
+    </section>
+
+    <section class="task">
+        <h3>3. Таблиця множення (радіокнопки)</h3>
+        <p class="desc">Варіанти відповіді генеруються випадково. Вибір варіанту одразу перевіряє відповідь — одна спроба.</p>
+        <p class="score" id="score3">Загальний рахунок 0% (0 правильних відповідей з 0)</p>
+        <button onclick="nextTask3()">наступне завдання</button>
+        <p class="question" id="question3"></p>
+        <div id="options3"></div>
+        <p class="result" id="result3"></p>
+    </section>
+
+    <section class="task">
+        <h3>4. Ротатор фотографій</h3>
+        <p class="desc">Перелистування через посилання «Назад» / «Вперед». Для першого фото приховано «Назад», для останнього — «Вперед».</p>
+        <div id="rotator"></div>
+    </section>
+
+    <section class="task">
+        <h3>5. Captcha</h3>
+        <p class="desc">Введіть число</p>
+        <div id="captchaDisplay"></div>
+        <input type="text" id="captchaInput">
+        <p class="result" id="captchaResult"></p>
+    </section>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
